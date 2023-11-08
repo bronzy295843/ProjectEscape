@@ -95,7 +95,7 @@ public class TicTacToe : MonoBehaviour
 
         }
         else
-            return 1;
+            return -1;
     }
 
     public void btnPress00()
