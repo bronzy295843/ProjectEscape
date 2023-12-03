@@ -5,6 +5,7 @@ using UnityEngine;
 public class CharacterMovement : MonoBehaviour
 {
     public GameObject puzzlePanel;
+    public GameObject interactionText;
 
     private CharacterController characterController;
 
@@ -70,6 +71,7 @@ public class CharacterMovement : MonoBehaviour
 
         if(Input.GetKey(KeyCode.F)) {
             puzzlePanel.SetActive(true);
+            interactionText.SetActive(false);
             canMove = false;
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
@@ -79,5 +81,11 @@ public class CharacterMovement : MonoBehaviour
 
     public void SetCanMove(bool setCanMove){
         canMove = setCanMove;
+    }
+
+    public void CursorLockOn()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 }
