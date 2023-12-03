@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour
 {
+    public GameObject puzzlePanel;
+
     private CharacterController characterController;
 
     public float walkSpeed = 6f;
@@ -13,6 +15,7 @@ public class CharacterMovement : MonoBehaviour
 
     Vector3 moveDirection = Vector3.zero;
     public bool canMove = true;
+    public bool canInteract = false;
 
     public Camera playerCamera;
     float rotationX = 0;
@@ -65,5 +68,16 @@ public class CharacterMovement : MonoBehaviour
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
         }
 
+        if(Input.GetKey(KeyCode.F)) {
+            puzzlePanel.SetActive(true);
+            canMove = false;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+
+    }
+
+    public void SetCanMove(bool setCanMove){
+        canMove = setCanMove;
     }
 }
