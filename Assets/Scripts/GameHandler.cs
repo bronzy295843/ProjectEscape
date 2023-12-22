@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEditor.TerrainTools;
 using UnityEngine;
 
-public class Arrowcontroller : MonoBehaviour
+public class GameHandler : MonoBehaviour
 {
     [SerializeField]
     List<GameObject> All_Arrows;
@@ -43,11 +43,12 @@ public class Arrowcontroller : MonoBehaviour
         {
             InArrowMovement = true;
             Invoke("ArrowMovement", timer);
-
         }
         if (PuzzleCompleted==true)
         {
-            door.transform.localScale = Vector3.Lerp(startpos, endpos, .05f);
+            PuzzlePanel.SetActive(false);
+            startpos = Vector3.Lerp(startpos, endpos, .005f);
+            door.transform.localScale = startpos;  
         }
     }
 
@@ -91,9 +92,7 @@ public class Arrowcontroller : MonoBehaviour
         {
             PuzzleCompleted = true;
             character.canMove = true;
-            PuzzlePanel.SetActive(false);
             InArrowMovement = true;
-            
         }
 
     }    
