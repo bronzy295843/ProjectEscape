@@ -464,7 +464,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b1f0a38420ad57489d0fa1451c562b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  snapRange: 50
+  snapRange: 100
 --- !u!4 &312707510 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8720532154232846346, guid: 9f9fd2b80b3b3a142a8b291eeb91fa2c, type: 3}
@@ -2027,7 +2027,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b1f0a38420ad57489d0fa1451c562b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  snapRange: 50
+  snapRange: 100
 --- !u!1 &1299687966
 GameObject:
   m_ObjectHideFlags: 0
@@ -4010,8 +4010,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 241.31311, y: -66.999}
-  m_SizeDelta: {x: -518.9401, y: -161.76}
+  m_AnchoredPosition: {x: 310.55154, y: -66.999}
+  m_SizeDelta: {x: -657.41693, y: -161.76}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2098921829
 MonoBehaviour:
