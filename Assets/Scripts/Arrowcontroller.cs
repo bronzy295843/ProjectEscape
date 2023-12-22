@@ -26,7 +26,16 @@ public class Arrowcontroller : MonoBehaviour
     [SerializeField]
     CharacterMovement character;
 
+    Vector3 startpos;
+    Vector3 endpos;
+
     public float timer = 2f;
+    private void Start()
+    {
+       startpos = new Vector3(1f, 1f, 1f);
+       endpos = new Vector3(1f, 0f, 1f);
+    }
+
 
     void Update()
     {
@@ -34,6 +43,11 @@ public class Arrowcontroller : MonoBehaviour
         {
             InArrowMovement = true;
             Invoke("ArrowMovement", timer);
+
+        }
+        if (PuzzleCompleted==true)
+        {
+            door.transform.localScale = Vector3.Lerp(startpos, endpos, .05f);
         }
     }
 
@@ -78,7 +92,8 @@ public class Arrowcontroller : MonoBehaviour
             PuzzleCompleted = true;
             character.canMove = true;
             PuzzlePanel.SetActive(false);
-            door.transform.localScale = new Vector3(1f,0.1f,1f);
+            InArrowMovement = true;
+            
         }
 
     }    
