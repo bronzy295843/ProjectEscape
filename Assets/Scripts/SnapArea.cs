@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SnapArea : MonoBehaviour
 {
-    public float snapRange = 500f;
+    public float snapRange = 50f;
 
     public bool IsInSnapRange(Vector2 position)
     {
