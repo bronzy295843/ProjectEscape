@@ -24,6 +24,9 @@ public class GameHandler : MonoBehaviour
     DraggableTextBox Loop;
 
     [SerializeField]
+    DraggableTextBox GoAhead;
+
+    [SerializeField]
     CharacterMovement character;
 
     Vector3 startpos;
@@ -58,14 +61,28 @@ public class GameHandler : MonoBehaviour
         {
             Loop.NewSnap = false;
             All_Arrows[1].SetActive(false);
-            All_Arrows.RemoveAt(1);
+            All_Arrows[1] = null;
+            IsLoop = false;
         }
-        
+
+        if (GoAhead.NewSnap)
+        {
+            GoAhead.NewSnap = false;
+            All_Arrows[1] = All_Arrows[3];
+           // All_Arrows[1].SetActive(false);
+        }
+
         InArrowMovement = false;
 
-        All_Arrows[count].SetActive(false);
 
-        count++;
+        if (All_Arrows[count] == null)
+            count--;
+
+        else if (All_Arrows[count + 1] != null)
+        {
+            All_Arrows[count].SetActive(false);
+            count++;
+        }
 
         //Loop reverting to start of function
         if (IsLoop)
@@ -80,6 +97,7 @@ public class GameHandler : MonoBehaviour
         Arrows a = All_Arrows[count].GetComponent<Enums>().codeLineType;
         if (a == Arrows.Loop)
         {
+            Debug.Log("isloop");
             IsLoop = true;
         }
         //Win condition
@@ -102,5 +120,6 @@ public enum Arrows
 {
     Loop,
     SimpleCodeLine,
-    EndCodeLine
+    EndCodeLine,
+    GoAhead
 };

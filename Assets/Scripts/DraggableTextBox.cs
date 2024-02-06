@@ -38,7 +38,7 @@ public class DraggableTextBox : MonoBehaviour, IPointerDownHandler, IDragHandler
         SnapArea[] snapAreas = FindObjectsOfType<SnapArea>();
         foreach (SnapArea snapArea in snapAreas)
         {
-            if (snapArea.IsInSnapRange(transform.localPosition))
+            if (snapArea.IsInSnapRange(transform.position))
             {
                 // Snap to the snappable area
                 transform.position = snapArea.GetSnapPosition();
