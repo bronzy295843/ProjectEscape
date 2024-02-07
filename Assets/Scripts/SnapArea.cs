@@ -6,7 +6,7 @@ public class SnapArea : MonoBehaviour
 
     public bool IsInSnapRange(Vector2 position)
     {
-        float distance = Vector2.Distance(position, transform.localPosition);
+        float distance = Vector2.Distance(position, transform.position);
         return distance < snapRange;
     }
 

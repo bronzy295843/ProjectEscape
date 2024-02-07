@@ -23,6 +23,8 @@ public class CharacterMovement : MonoBehaviour
     public float lookSpeed = 2f;
     public float lookXLimit = 45f;
 
+    public GameHandler gameHandler;
+
     void Start()
     {
         characterController = GetComponent<CharacterController>();

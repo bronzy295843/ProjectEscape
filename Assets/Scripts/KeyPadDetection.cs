@@ -6,7 +6,7 @@ public class KeyPadDetection : MonoBehaviour
     public TMP_Text text;
 
     [SerializeField]
-    Arrowcontroller GameOver;
+    GameHandler GameOver;
 
     private void OnTriggerEnter(Collider other) {
         if(other.CompareTag("Player")){
