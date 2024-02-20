@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3096337089091500743}
   - component: {fileID: 1085191291591333815}
-  - component: {fileID: 189006826016752470}
+  - component: {fileID: 790315208050966480}
   m_Layer: 5
   m_Name: LineOfCode
   m_TagString: Untagged
@@ -49,7 +49,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 992401328554210403}
   m_CullTransparentMesh: 1
---- !u!114 &189006826016752470
+--- !u!114 &790315208050966480
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -58,10 +58,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 992401328554210403}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a52e5b4d19049841bb75963259dc0bf, type: 3}
+  m_Script: {fileID: 11500000, guid: 95a29f0de7576904eb471c3f148703e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lineType: 0
+  HighlightedBackground: {fileID: 9121880613312513718}
 --- !u!1 &2663461756477422321
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,7 +204,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: def unbreakable_door
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -231,7 +231,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20.4
+  m_fontSize: 25
   m_fontSizeBase: 35.8
   m_fontWeight: 400
   m_enableAutoSizing: 1

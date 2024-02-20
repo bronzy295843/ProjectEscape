@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TypeOfLine : MonoBehaviour
+[System.Serializable]
+public class TypeOfLine
 {
-    [SerializeField] private Line lineType;
+    public Line lineType;
+    public string text;
+    public GameObject linePrefab; 
 }
 
 public enum Line
@@ -12,5 +15,6 @@ public enum Line
     Loop,
     SimpleCodeLine,
     EndCodeLine,
-    GoAhead
+    GoAhead,
+    Empty
 };
