@@ -8,6 +8,8 @@ public class CharacterMovement : MonoBehaviour
     public GameObject interactionText;
 
     private CharacterController characterController;
+    private Animator playerAnimator;
+    const string IS_WALK = "speed";
 
     public float walkSpeed = 6f;
     public float runSpeed = 12f;
@@ -28,6 +30,7 @@ public class CharacterMovement : MonoBehaviour
     void Start()
     {
         characterController = GetComponent<CharacterController>();
+        playerAnimator = GetComponentInChildren<Animator>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -63,6 +66,8 @@ public class CharacterMovement : MonoBehaviour
         //}
 
         characterController.Move(moveDirection * Time.deltaTime);
+        playerAnimator.SetFloat(IS_WALK, moveDirection.magnitude);
+        
         if (canMove)
         {
             rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
