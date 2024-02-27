@@ -76,12 +76,16 @@ public class CharacterMovement : MonoBehaviour
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
         }
 
-        if(Input.GetKey(KeyCode.F)) {
-            puzzlePanel.SetActive(true);
-            interactionText.SetActive(false);
-            canMove = false;
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
+        if(Input.GetKey(KeyCode.F) && canInteract)
+        {
+            if (!GameHandler.Instance.PuzzleCompleted)
+            {
+                puzzlePanel.SetActive(true);
+                interactionText.SetActive(false);
+                canMove = false;
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+            }
         }
 
     }

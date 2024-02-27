@@ -1,56 +1,50 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class DraggableTextBox : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
+public class DraggableTextBox : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
-    private bool isDragging = false;
-    private Vector2 offset;
-    private Vector3 position;
+    Vector3 originalPosition;
 
-    public bool NewSnap = false;
+
+    private CanvasGroup canvasGroup;
 
     private void Start()
     {
-        position = transform.localPosition;
+
     }
+
+    private void Awake()
+    {
+        originalPosition = GetComponentInChildren<TextMeshProUGUI>().rectTransform.anchoredPosition;
+        canvasGroup = GetComponent<CanvasGroup>();
+    }
+
+    private void Update()
+    {
+
+    }
+
     public void OnPointerDown(PointerEventData eventData)
     {
-        isDragging = true;
-        offset = eventData.position - (Vector2) GetComponentInChildren<TextMeshProUGUI>().transform.position;
+        GetComponent<CodeLineInformation>().SelectedLine();
+    }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        canvasGroup.blocksRaycasts = false;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (isDragging)
-        {
-            GetComponentInChildren<TextMeshProUGUI>().transform.position = eventData.position - offset;
-        }
+        GetComponentInChildren<TextMeshProUGUI>().transform.position = eventData.position;
     }
 
-    public void OnPointerUp(PointerEventData eventData)
+    public void OnEndDrag(PointerEventData eventData)
     {
-        isDragging = false;
-
-        // Check if the textbox is in a snappable position
-        // You need to implement your logic for snapping here
-        // For simplicity, let's assume there's a SnapArea script on snappable areas
-
-        SnapArea[] snapAreas = FindObjectsOfType<SnapArea>();
-        foreach (SnapArea snapArea in snapAreas)
-        {
-            if (snapArea.IsInSnapRange(GetComponentInChildren<TextMeshProUGUI>().transform.position))
-            {
-                // Snap to the snappable area
-                GetComponentInChildren<TextMeshProUGUI>().transform.position = snapArea.GetSnapPosition();
-                NewSnap = true;
-                return;
-            }
-        }
-
-        // If not in a snappable area, return to the original position
-        // You can modify this part based on your requirements
-        GetComponentInChildren<TextMeshProUGUI>().transform.localPosition = position;
+        canvasGroup.blocksRaycasts = true;
+        GetComponentInChildren<TextMeshProUGUI>().rectTransform.anchoredPosition = originalPosition;
     }
 }
 
