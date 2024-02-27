@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour
@@ -24,6 +25,10 @@ public class CharacterMovement : MonoBehaviour
     float rotationX = 0;
     public float lookSpeed = 2f;
     public float lookXLimit = 45f;
+
+    [SerializeField] private float sphereRadius = 0.5f;
+    [SerializeField]private float groundCheckDistance = 0.9f;
+    [SerializeField] private Vector3 deviation;
 
     public GameHandler gameHandler;
 
@@ -60,10 +65,14 @@ public class CharacterMovement : MonoBehaviour
         //    moveDirection.y = movementDirectionY;
         //}
 
-        //if (!characterController.isGrounded)
-        //{
-        //    moveDirection.y -= gravity * Time.deltaTime;
-        //}
+        if (!IsGrounded())
+        {
+            moveDirection.y -= gravity ;
+        }
+        else
+        {
+            Debug.Log("Grounded");
+        }
 
         characterController.Move(moveDirection * Time.deltaTime);
         playerAnimator.SetFloat(IS_WALK, moveDirection.magnitude);
@@ -98,5 +107,16 @@ public class CharacterMovement : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    private bool IsGrounded()
+    {
+        RaycastHit hit;
+        bool isGrounded = Physics.SphereCast(transform.position + deviation, sphereRadius, Vector3.down, out hit, groundCheckDistance);
+
+        if (isGrounded)
+            return true;
+        else
+            return false;
     }
 }
