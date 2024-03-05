@@ -6,7 +6,9 @@ using UnityEngine;
 public class CharacterMovement : MonoBehaviour
 {
     public GameObject puzzlePanel;
-    public GameObject interactionText;
+    [SerializeField] private GameObject interactionText;
+    [SerializeField] private GameObject pickUpInteractionText;
+    [SerializeField] private GameObject dropInteractionText;
 
     private CharacterController characterController;
     private Animator playerAnimator;
@@ -26,9 +28,13 @@ public class CharacterMovement : MonoBehaviour
     public float lookSpeed = 2f;
     public float lookXLimit = 45f;
 
+    private bool isHolding;
     [SerializeField] private float sphereRadius = 0.5f;
     [SerializeField]private float groundCheckDistance = 0.9f;
     [SerializeField] private Vector3 deviation;
+    [SerializeField] GameObject objectHolder;
+    private GameObject heldObject;
+    private GameObject placementObject;
 
     public GameHandler gameHandler;
 
@@ -67,16 +73,16 @@ public class CharacterMovement : MonoBehaviour
 
         if (!IsGrounded())
         {
-            moveDirection.y -= gravity ;
+            moveDirection.y -= gravity;
         }
         else
         {
-            Debug.Log("Grounded");
+            //Debug.Log("Grounded");
         }
 
         characterController.Move(moveDirection * Time.deltaTime);
         playerAnimator.SetFloat(IS_WALK, moveDirection.magnitude);
-        
+
         if (canMove)
         {
             rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
@@ -85,7 +91,7 @@ public class CharacterMovement : MonoBehaviour
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
         }
 
-        if(Input.GetKey(KeyCode.F) && canInteract)
+        if (Input.GetKey(KeyCode.F) && canInteract)
         {
             if (!GameHandler.Instance.PuzzleCompleted)
             {
@@ -97,8 +103,48 @@ public class CharacterMovement : MonoBehaviour
             }
         }
 
+        if(Input.GetKeyDown(KeyCode.F) && GetComponent<ObjectDetection>().AnyObjectDetected() && !isHolding)
+        {
+            heldObject = GetComponent<ObjectDetection>().GetInteractedObject();
+            heldObject.GetComponent<Rigidbody>().useGravity = false;
+            heldObject.GetComponent<ObjectHoldInteractable>().ChangeParent(objectHolder.transform);
+            heldObject.transform.localPosition = Vector3.zero;
+            isHolding = true;
+        }
+        
+        else if(Input.GetKeyDown(KeyCode.F) && isHolding && GetComponent<ObjectDetection>().AnyPlacementObjectDetected())
+        {
+            placementObject = GetComponent<ObjectDetection>().GetInteractedPlacementObject();
+            heldObject.GetComponent<Rigidbody>().useGravity = true;
+            heldObject.GetComponent<ObjectHoldInteractable>().ChangeParent(placementObject.transform);
+            heldObject.transform.localPosition = Vector3.zero;
+            heldObject = null;
+            isHolding = false;
+        }
+
+        else if (Input.GetKeyDown(KeyCode.F) && isHolding)
+        {
+            heldObject.GetComponent<Rigidbody>().useGravity = true;
+            heldObject.GetComponent<ObjectHoldInteractable>().ChangeParent(null);
+            heldObject = null;
+            isHolding = false;
+        }
     }
 
+
+    public void HideInteractPopUp()
+    {
+        interactionText.SetActive(false);
+    }
+
+    public void HidePickUpInteractPopUp()
+    {
+        pickUpInteractionText.SetActive(false);
+    }
+    public void HideDropInteractPopUp()
+    {
+        dropInteractionText.SetActive(false);
+    }
     public void SetCanMove(bool setCanMove){
         canMove = setCanMove;
     }
@@ -107,6 +153,11 @@ public class CharacterMovement : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    public bool IsHoldingObject()
+    {
+        return isHolding;
     }
 
     private bool IsGrounded()

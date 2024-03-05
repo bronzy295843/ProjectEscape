@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 3320107792222734058}
   - component: {fileID: 1158293929813905275}
   - component: {fileID: 9177073961517016662}
+  - component: {fileID: -538034839652297052}
+  - component: {fileID: 8905228029153503840}
   m_Layer: 0
   m_Name: Plastic_Crate_Red
   m_TagString: Untagged
@@ -83,3 +85,39 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &-538034839652297052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 927655830375779476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccd205bf189720940b4f45a096cb2d45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numberOfObjects: 0
+  interactionText: {fileID: 0}
+--- !u!64 &8905228029153503840
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 927655830375779476}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 8820428323018758698, guid: 69736aa660aa3f743833e53fad833248, type: 3}
