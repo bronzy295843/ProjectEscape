@@ -93,14 +93,12 @@ public class CharacterMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.F) && canInteract)
         {
-            if (!GameHandler.Instance.PuzzleCompleted)
-            {
-                puzzlePanel.SetActive(true);
-                interactionText.SetActive(false);
-                canMove = false;
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-            }
+            puzzlePanel.SetActive(true);
+            interactionText.SetActive(false);
+            canMove = false;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            
         }
 
         if(Input.GetKeyDown(KeyCode.F) && GetComponent<ObjectDetection>().AnyObjectDetected() && !isHolding)
@@ -131,6 +129,10 @@ public class CharacterMovement : MonoBehaviour
         }
     }
 
+    public void SetPuzzleToInteract(GameObject puzzle)
+    {
+        puzzlePanel = puzzle;
+    }
 
     public void HideInteractPopUp()
     {
