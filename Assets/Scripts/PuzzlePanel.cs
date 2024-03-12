@@ -12,11 +12,11 @@ public class PuzzlePanel : MonoBehaviour
     [SerializeField] private TypeOfLine[] codeLine;
     [SerializeField] private TypeOfLine[] toolBox;
 
-    private float yDeviation_codeBox = 80f;
-    private float xDeviation_codeBox = -300f;
+    [SerializeField] private float yDeviation_codeBox = 80f;
+    [SerializeField] private float xDeviation_codeBox = -300f;
 
-    private float yDeviation_toolBox = 80f;
-    private float xDeviation_toolBox = 400f;
+    [SerializeField] private float yDeviation_toolBox = 80f;
+    [SerializeField] private float xDeviation_toolBox = 400f;
 
     private float delay = 1f;
     private float lastTime = 0f;
@@ -32,7 +32,7 @@ public class PuzzlePanel : MonoBehaviour
     private int step_count = 1;
     [SerializeField] private int maxStepCount;
 
-
+    [SerializeField] private TextMeshProUGUI WatcherOfVariables;
 
     void Start()
     {
@@ -123,6 +123,8 @@ public class PuzzlePanel : MonoBehaviour
             {
                 step_count++;
                 codeLineIndex++;
+
+                WatcherOfVariables.text = step_count.ToString() + " of " + maxStepCount.ToString();
             }
             else if (codeLineIndex >= codeLine.Length || codeLine[codeLineIndex].lineType == Line.If)
             {
