@@ -18,7 +18,7 @@ public class PuzzlePanel : MonoBehaviour
     [SerializeField] private float yDeviation_toolBox = 80f;
     [SerializeField] private float xDeviation_toolBox = 400f;
 
-    private float delay = 1f;
+    [SerializeField] private float delay = 1f;
     private float lastTime = 0f;
 
     private int codeLineIndex = 1;
