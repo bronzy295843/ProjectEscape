@@ -8,12 +8,20 @@ public class GameHandler : MonoBehaviour
 
     public static GameHandler Instance { get; private set; }
 
+    // Starting Room
     public GameObject door;
+
+    // Stairs
     [SerializeField] private GameObject stairsToFirstFloor;
+
+    //1st Floor
+    [SerializeField] private GameObject Platform;
+    [SerializeField] private GameObject InvisibleWall;
 
     public bool PuzzleCompleted = false;
     public bool SidePuzzleStorageRoomCompleted = false;
     public bool StairsPuzzleCompleted = false;
+    public bool PlatformPuzzleCompleted = false;
 
     //public GameObject PuzzlePanel;
 
@@ -45,6 +53,18 @@ public class GameHandler : MonoBehaviour
             stairsToFirstFloor.SetActive(true);
             character.canMove = true;
             StairsPuzzleCompleted = false;
+
+            character.canInteract = false;
+            HideMouseCursor();
+        }
+
+        if (PlatformPuzzleCompleted)
+        {
+            PuzzlePanel.Instance.DestroyPuzzle();
+            Platform.SetActive(true);
+            InvisibleWall.SetActive(false);
+            character.canMove = true;
+            PlatformPuzzleCompleted = false;
 
             character.canInteract = false;
             HideMouseCursor();

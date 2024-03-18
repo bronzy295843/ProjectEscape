@@ -53,7 +53,7 @@ public class PuzzlePanel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(puzzleNumber == 1)
+        if(puzzleNumber == 1 || puzzleNumber == 3)
             RunCodeBlock();
 
         else if (puzzleNumber == 2)
@@ -162,7 +162,10 @@ public class PuzzlePanel : MonoBehaviour
             }
             else if (codeLineIndex >= codeLine.Length || codeLine[codeLineIndex].lineType == Line.EndCodeLine)
             {
-                GameHandler.Instance.PuzzleCompleted = true;
+                if (puzzleNumber == 1)
+                    GameHandler.Instance.PuzzleCompleted = true;
+                else if (puzzleNumber == 3)
+                    GameHandler.Instance.PlatformPuzzleCompleted = true;
             }
             else
                 codeLineIndex++;
