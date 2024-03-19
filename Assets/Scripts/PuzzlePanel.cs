@@ -6,18 +6,19 @@ using TMPro;
 public class PuzzlePanel : MonoBehaviour
 {
     public static PuzzlePanel Instance;
+
+    [SerializeField] private int puzzleNumber;
+
     [SerializeField] private TypeOfLine[] codeLine;
     [SerializeField] private TypeOfLine[] toolBox;
 
-    private Vector3 lastInstantiatedPosition = Vector3.zero;
+    [SerializeField] private float yDeviation_codeBox = 80f;
+    [SerializeField] private float xDeviation_codeBox = -300f;
 
-    private float yDeviation_codeBox = 80f;
-    private float xDeviation_codeBox = -300f;
+    [SerializeField] private float yDeviation_toolBox = 80f;
+    [SerializeField] private float xDeviation_toolBox = 400f;
 
-    private float yDeviation_toolBox = 80f;
-    private float xDeviation_toolBox = 400f;
-
-    private float delay = 1f;
+    [SerializeField] private float delay = 1f;
     private float lastTime = 0f;
 
     private int codeLineIndex = 1;
@@ -26,6 +27,12 @@ public class PuzzlePanel : MonoBehaviour
     private string selectedCodeLineText;
     private GameObject selectedCodeLinePrefab;
 
+    [SerializeField] GameObject PuzzleTrigger;
+
+    private int step_count = 1;
+    [SerializeField] private int maxStepCount;
+
+    [SerializeField] private TextMeshProUGUI WatcherOfVariables;
 
     void Start()
     {
@@ -46,7 +53,11 @@ public class PuzzlePanel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RunCodeBlock();
+        if(puzzleNumber == 1 || puzzleNumber == 3)
+            RunCodeBlock();
+
+        else if (puzzleNumber == 2)
+            RunStairsPuzzleCodeBlock();
     }
 
     
@@ -92,7 +103,7 @@ public class PuzzlePanel : MonoBehaviour
         }
     }
 
-    private void RunCodeBlock()
+    private void RunStairsPuzzleCodeBlock()
     {
 
         codeLine[codeLineIndex].linePrefab.GetComponentInChildren<SelectedCodeLine>().EnableHighlight();
@@ -108,16 +119,60 @@ public class PuzzlePanel : MonoBehaviour
             {
 
             }
-            else if(codeLineIndex >= codeLine.Length || codeLine[codeLineIndex].lineType == Line.EndCodeLine)
+            else if(codeLineIndex >= codeLine.Length || codeLine[codeLineIndex].lineType == Line.Increment)
             {
-                GameHandler.Instance.PuzzleCompleted = true;
+                step_count++;
+                codeLineIndex++;
+
+                WatcherOfVariables.text = step_count.ToString() + " of " + maxStepCount.ToString();
             }
+            else if (codeLineIndex >= codeLine.Length || codeLine[codeLineIndex].lineType == Line.If)
+            {
+                codeLineIndex++;
+                if (step_count >= maxStepCount)
+                    GameHandler.Instance.StairsPuzzleCompleted = true;
+            }
+            //else if(codeLineIndex >= codeLine.Length || codeLine[codeLineIndex].lineType == Line.EndCodeLine)
+            //{
+            //    GameHandler.Instance.PuzzleCompleted = true;
+            //}
             else 
                 codeLineIndex++;
             codeLine[codeLineIndex].linePrefab.GetComponentInChildren<SelectedCodeLine>().EnableHighlight();
             lastTime = Time.time;
         }
         
+    }
+
+    private void RunCodeBlock()
+    {
+
+        codeLine[codeLineIndex].linePrefab.GetComponentInChildren<SelectedCodeLine>().EnableHighlight();
+
+
+        if (Time.time - lastTime > delay)
+        {
+            codeLine[codeLineIndex].linePrefab.GetComponentInChildren<SelectedCodeLine>().DisableHighlight();
+
+            if (codeLineIndex >= codeLine.Length || codeLine[codeLineIndex].lineType == Line.Loop)
+                codeLineIndex = 1;
+            else if (codeLineIndex >= codeLine.Length || codeLine[codeLineIndex].lineType == Line.Empty)
+            {
+
+            }
+            else if (codeLineIndex >= codeLine.Length || codeLine[codeLineIndex].lineType == Line.EndCodeLine)
+            {
+                if (puzzleNumber == 1)
+                    GameHandler.Instance.PuzzleCompleted = true;
+                else if (puzzleNumber == 3)
+                    GameHandler.Instance.PlatformPuzzleCompleted = true;
+            }
+            else
+                codeLineIndex++;
+            codeLine[codeLineIndex].linePrefab.GetComponentInChildren<SelectedCodeLine>().EnableHighlight();
+            lastTime = Time.time;
+        }
+
     }
 
     public void SetSelectedCodeLine(string text, Line lineType)
@@ -151,5 +206,11 @@ public class PuzzlePanel : MonoBehaviour
         selectedCodeLineType = Line.Empty;
         selectedCodeLineText = string.Empty;
         selectedCodeLinePrefab.GetComponent<CodeLineInformation>().ChangeToEmptyLine();
+    }
+
+    public void DestroyPuzzle()
+    {
+        Destroy(PuzzleTrigger);
+        Destroy(this.gameObject);
     }
 }
