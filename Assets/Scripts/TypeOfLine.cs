@@ -16,7 +16,5 @@ public enum Line
     SimpleCodeLine,
     EndCodeLine,
     GoAhead,
-    Increment,
-    If,
     Empty
 };
