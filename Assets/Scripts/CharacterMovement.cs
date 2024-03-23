@@ -129,6 +129,13 @@ public class CharacterMovement : MonoBehaviour
         }
     }
 
+    public void Respawn(Vector3 pos)
+    {
+        Debug.Log("Respawn!");
+        characterController.enabled = false;
+        transform.position = pos;
+        characterController.enabled = true;
+    }
     public void SetPuzzleToInteract(GameObject puzzle)
     {
         puzzlePanel = puzzle;
