@@ -22,6 +22,7 @@ public class GameHandler : MonoBehaviour
     public bool SidePuzzleStorageRoomCompleted = false;
     public bool StairsPuzzleCompleted = false;
     public bool PlatformPuzzleCompleted = false;
+    public bool EnemyDisablePuzzleCompleted = false;
 
     //public GameObject PuzzlePanel;
 
@@ -68,6 +69,13 @@ public class GameHandler : MonoBehaviour
 
             character.canInteract = false;
             HideMouseCursor();
+        }
+        if(EnemyDisablePuzzleCompleted)
+        {
+            PuzzlePanel.Instance.HidePuzzle();
+            character.EnemyInteractingWith.GetComponent<EnemyController>().FreezeEnemy();
+            character.HideEnemyInteractPopUp();
+            EnemyDisablePuzzleCompleted = false;
         }
     }
 

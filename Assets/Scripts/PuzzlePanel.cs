@@ -33,6 +33,12 @@ public class PuzzlePanel : MonoBehaviour
     [SerializeField] private int maxStepCount;
 
     [SerializeField] private TextMeshProUGUI WatcherOfVariables;
+    [SerializeField] private TextMeshProUGUI WatcherOfVariablesEnemy_boolText;
+    [SerializeField] private TextMeshProUGUI WatcherOfVariablesEnemy_countText;
+
+    //private bool isEnemyHacked = false;
+    private int freeze_count;
+    [SerializeField] private int maxFreezeCount;
 
     void Start()
     {
@@ -50,14 +56,15 @@ public class PuzzlePanel : MonoBehaviour
 
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(puzzleNumber == 1 || puzzleNumber == 3)
+        if (puzzleNumber == 1 || puzzleNumber == 3)
             RunCodeBlock();
 
         else if (puzzleNumber == 2)
             RunStairsPuzzleCodeBlock();
+        else if (puzzleNumber == 0)
+            RunDisableEnemyPuzzleCodeBlock();
     }
 
     
@@ -74,16 +81,13 @@ public class PuzzlePanel : MonoBehaviour
 
     private void InstantiateCodeLines(TypeOfLine[] codeLine, float xDeviation, float yDeviation)
     {
-       // lastInstantiatedPosition = Vector3.zero;
-        //lastInstantiatedPosition += Vector3.right * xDeviation;
         for (int i = 0; i < codeLine.Length; i++) 
         {
             GameObject instantiatedLine = Instantiate(codeLine[i].linePrefab, transform);
-            //instantiatedLine.transform.position = lastInstantiatedPosition;
+
             instantiatedLine.GetComponent<RectTransform>().anchoredPosition += Vector2.up * yDeviation;
             instantiatedLine.GetComponent<RectTransform>().anchoredPosition += Vector2.right * xDeviation;
             yDeviation -= 100;
-            //lastInstantiatedPosition = instantiatedLine.transform.position;
             codeLine[i].linePrefab = instantiatedLine;
         }
     }
@@ -142,6 +146,55 @@ public class PuzzlePanel : MonoBehaviour
             lastTime = Time.time;
         }
         
+    }
+
+    private void RunDisableEnemyPuzzleCodeBlock()
+    {
+
+        codeLine[codeLineIndex].linePrefab.GetComponentInChildren<SelectedCodeLine>().EnableHighlight();
+
+
+        if (Time.time - lastTime > delay)
+        {
+            codeLine[codeLineIndex].linePrefab.GetComponentInChildren<SelectedCodeLine>().DisableHighlight();
+
+            if (codeLineIndex >= codeLine.Length || codeLine[codeLineIndex].lineType == Line.Loop)
+                codeLineIndex = 1;
+            else if (codeLineIndex >= codeLine.Length || codeLine[codeLineIndex].lineType == Line.Empty)
+            {
+
+            }
+            else if(codeLineIndex >= codeLine.Length || codeLine[codeLineIndex].lineType == Line.Bool)
+            {
+                codeLineIndex++;
+                WatcherOfVariablesEnemy_boolText.text = "EnemyHacked = true";
+            }    
+            else if (codeLineIndex >= codeLine.Length || codeLine[codeLineIndex].lineType == Line.Increment)
+            {
+                if(freeze_count < maxFreezeCount)
+                    freeze_count++;
+                codeLineIndex++;
+
+                WatcherOfVariablesEnemy_countText.text = "FreezeCount = " + freeze_count;
+            }
+            else if (codeLineIndex >= codeLine.Length || codeLine[codeLineIndex].lineType == Line.If)
+            {
+                codeLineIndex++;
+                if (freeze_count == maxFreezeCount)
+                    codeLineIndex++;
+            }
+            else if (codeLineIndex >= codeLine.Length || codeLine[codeLineIndex].lineType == Line.EndCodeLine)
+            {
+                if (freeze_count >= maxFreezeCount)
+                    GameHandler.Instance.EnemyDisablePuzzleCompleted = true;
+
+            }
+            else
+                codeLineIndex++;
+            codeLine[codeLineIndex].linePrefab.GetComponentInChildren<SelectedCodeLine>().EnableHighlight();
+            lastTime = Time.time;
+        }
+
     }
 
     private void RunCodeBlock()
@@ -212,5 +265,10 @@ public class PuzzlePanel : MonoBehaviour
     {
         Destroy(PuzzleTrigger);
         Destroy(this.gameObject);
+    }
+
+    public void HidePuzzle()
+    {
+        gameObject.SetActive(false);
     }
 }

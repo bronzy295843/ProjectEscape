@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyController : MonoBehaviour
 {
@@ -19,6 +20,13 @@ public class EnemyController : MonoBehaviour
     Vector3 moveDirection = Vector3.zero;
 
     [SerializeField] private float idleTime;
+
+    [SerializeField] private Slider freezeBar;
+
+    [SerializeField] private GameObject freezePuzzlePanel;
+    [SerializeField] private GameObject interactionText;
+
+    [SerializeField] float freezeTime;
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -43,6 +51,8 @@ public class EnemyController : MonoBehaviour
         isRight = true;
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
+
+        freezeBar.maxValue = freezeTime;
     }
 
     private void Update()
@@ -68,5 +78,38 @@ public class EnemyController : MonoBehaviour
         float dir = isRight? -180f : 180f;
 
         transform.Rotate(0f, dir, 0f);
+    }
+
+    public void ShowInteractionText()
+    {
+        interactionText.gameObject.SetActive(true); 
+    }
+
+    public void ShowFreezePuzzlePanel()
+    {
+        freezePuzzlePanel.SetActive(true);
+    }
+
+    public void HideFreezePuzzlePanel()
+    {
+        freezePuzzlePanel.SetActive(false);
+    }
+
+    public void FreezeEnemy()
+    {
+        freezeBar.gameObject.SetActive(true);
+        StartCoroutine(Timer());
+    }
+
+    IEnumerator Timer()
+    {
+        while(freezeTime >= 0)
+        {
+            freezeTime -= Time.deltaTime;
+            yield return new WaitForSeconds(0.001f);
+            freezeBar.value = freezeTime;
+        }
+        canMove = true;
+        freezeBar.gameObject.SetActive(false);
     }
 }

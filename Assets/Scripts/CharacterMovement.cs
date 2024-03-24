@@ -9,6 +9,7 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] private GameObject interactionText;
     [SerializeField] private GameObject pickUpInteractionText;
     [SerializeField] private GameObject dropInteractionText;
+    [SerializeField] private GameObject enemyInteractionText;
 
     private CharacterController characterController;
     private Animator playerAnimator;
@@ -37,6 +38,7 @@ public class CharacterMovement : MonoBehaviour
     private GameObject placementObject;
 
     public GameHandler gameHandler;
+    public GameObject EnemyInteractingWith;
 
     void Start()
     {
@@ -127,6 +129,15 @@ public class CharacterMovement : MonoBehaviour
             heldObject = null;
             isHolding = false;
         }
+        else if(Input.GetKeyDown(KeyCode.F) && GetComponent<ObjectDetection>().AnyEnemyDetected())
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+
+            EnemyInteractingWith = GetComponent<ObjectDetection>().GetInteractedEnemy();
+            EnemyInteractingWith.GetComponent<EnemyController>().ShowFreezePuzzlePanel();
+            EnemyInteractingWith.GetComponent<EnemyController>().canMove = false;
+        }
     }
 
     public void Respawn(Vector3 pos)
@@ -139,6 +150,11 @@ public class CharacterMovement : MonoBehaviour
     public void SetPuzzleToInteract(GameObject puzzle)
     {
         puzzlePanel = puzzle;
+    }
+
+    public void HideEnemyInteractPopUp()
+    {
+        enemyInteractionText.SetActive(false);
     }
 
     public void HideInteractPopUp()

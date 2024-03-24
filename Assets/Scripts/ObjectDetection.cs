@@ -10,9 +10,12 @@ public class ObjectDetection : MonoBehaviour
 
     private GameObject interactedObject;
     private GameObject interactedPlacementObject;
+    private GameObject interactedEnemy;
 
     private bool objectDetected;
     private bool placementObjectDetected;
+    private bool enemyDetected;
+
     void Start()
     {
         
@@ -32,7 +35,15 @@ public class ObjectDetection : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray_pos.position, ray_pos.TransformDirection(Vector3.forward), out hit, distance))
         {
-            if (hit.transform.gameObject.GetComponent<ObjectHoldInteractable>() && !GetComponent<CharacterMovement>().IsHoldingObject())
+            Debug.Log(hit.transform.transform.name);
+            if(hit.transform.gameObject.GetComponent<EnemyController>())
+            {
+                enemyDetected = true;
+                SetInteractedEnemy(hit.transform.gameObject);
+                hit.transform.gameObject.GetComponent<EnemyController>().ShowInteractionText();
+
+            }
+            else if (hit.transform.gameObject.GetComponent<ObjectHoldInteractable>() && !GetComponent<CharacterMovement>().IsHoldingObject())
             {
                 objectDetected = true;
                 SetInteractedObject(hit.transform.gameObject);
@@ -51,19 +62,40 @@ public class ObjectDetection : MonoBehaviour
             {
                 SetInteractedObject(null);
                 SetInteractedPlacementObject(null);
+                SetInteractedEnemy(null);
+
                 objectDetected = false;
                 placementObjectDetected = false;
+                enemyDetected = false;
+
                 GetComponent<CharacterMovement>().HidePickUpInteractPopUp();
                 GetComponent<CharacterMovement>().HideDropInteractPopUp();
+                GetComponent<CharacterMovement>().HideEnemyInteractPopUp();
             }
         }
         else
         {
             Debug.DrawRay(ray_pos.position, ray_pos.TransformDirection(Vector3.forward) * 1000, Color.white);
-            //Debug.Log("Did not Hit");
+
+            GetComponent<CharacterMovement>().HideEnemyInteractPopUp();
         }
+       
     }
 
+    private void SetInteractedEnemy(GameObject enemy)
+    {
+        interactedEnemy = enemy;
+    }
+
+    public bool AnyEnemyDetected()
+    {
+        return enemyDetected;
+    }
+
+    public GameObject GetInteractedEnemy()
+    {
+        return interactedEnemy;
+    }
     private void SetInteractedObject(GameObject obj)
     {
         interactedObject = obj;
