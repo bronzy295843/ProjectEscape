@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Unity.VisualScripting;
 
 public class PuzzlePanel : MonoBehaviour
 {
@@ -36,6 +37,9 @@ public class PuzzlePanel : MonoBehaviour
     [SerializeField] private TextMeshProUGUI WatcherOfVariablesEnemy_boolText;
     [SerializeField] private TextMeshProUGUI WatcherOfVariablesEnemy_countText;
 
+    private string promptString = "";
+    [SerializeField] private TMP_InputField promptField;
+
     //private bool isEnemyHacked = false;
     private int freeze_count;
     [SerializeField] private int maxFreezeCount;
@@ -47,6 +51,9 @@ public class PuzzlePanel : MonoBehaviour
 
         InstantiateCodeLines(toolBox, xDeviation_toolBox, yDeviation_toolBox);
         SetText(toolBox);
+
+        if (puzzleNumber == 5)
+            TrapPuzzleFake();
     }
 
     void Awake()
@@ -65,6 +72,8 @@ public class PuzzlePanel : MonoBehaviour
             RunStairsPuzzleCodeBlock();
         else if (puzzleNumber == 0)
             RunDisableEnemyPuzzleCodeBlock();
+        else if (puzzleNumber == 6)
+            BrainChipPuzzle();
     }
 
     
@@ -225,9 +234,62 @@ public class PuzzlePanel : MonoBehaviour
             codeLine[codeLineIndex].linePrefab.GetComponentInChildren<SelectedCodeLine>().EnableHighlight();
             lastTime = Time.time;
         }
-
     }
 
+    private void TrapPuzzleFake()
+    {
+        SoundManager.Instance.PlayMusic("YouAreTrapped!");
+        Destroy(PuzzleTrigger);
+        Destroy(this.gameObject, 1f);
+        GameHandler.Instance.TrapCellFakePuzzleCompleted = true;
+    }
+
+    private void BrainChipPuzzle()
+    {
+
+        codeLine[codeLineIndex].linePrefab.GetComponentInChildren<SelectedCodeLine>().EnableHighlight();
+
+
+        if (Time.time - lastTime > delay)
+        {
+            codeLine[codeLineIndex].linePrefab.GetComponentInChildren<SelectedCodeLine>().DisableHighlight();
+
+            if (codeLineIndex >= codeLine.Length || codeLine[codeLineIndex].lineType == Line.Loop)
+                codeLineIndex = 1;
+            else if (codeLineIndex >= codeLine.Length || codeLine[codeLineIndex].lineType == Line.Empty)
+            {
+
+            }
+            else if(codeLineIndex >= codeLine.Length || codeLine[codeLineIndex].lineType == Line.LocalVariable)
+            {
+                codeLine[codeLineIndex].linePrefab.GetComponentInChildren<TextMeshProUGUI>().text = promptString;
+                codeLine[codeLineIndex].linePrefab.GetComponent<CodeLineInformation>().SetCodeLineText(promptString);
+                codeLineIndex++;
+                
+            }
+            else if (codeLineIndex >= codeLine.Length || codeLine[codeLineIndex].lineType == Line.If)
+            {
+                if (promptString == "hack is 1")
+                    codeLineIndex++;
+                else
+                    codeLineIndex += 2;
+            }
+            else if (codeLineIndex >= codeLine.Length || codeLine[codeLineIndex].lineType == Line.EndCodeLine)
+            {
+                GameHandler.Instance.BrainChipPuzzleCompleted = true;
+            }
+            else
+                codeLineIndex++;
+            codeLine[codeLineIndex].linePrefab.GetComponentInChildren<SelectedCodeLine>().EnableHighlight();
+            lastTime = Time.time;
+        }
+    }
+
+    public void PromptChange()
+    {
+        promptString = promptField.text;
+        Debug.Log(promptString);
+    }
     public void SetSelectedCodeLine(string text, Line lineType)
     {
         selectedCodeLineText = text;

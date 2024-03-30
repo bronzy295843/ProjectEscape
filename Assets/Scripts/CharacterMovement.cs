@@ -107,6 +107,8 @@ public class CharacterMovement : MonoBehaviour
         {
             heldObject = GetComponent<ObjectDetection>().GetInteractedObject();
             heldObject.GetComponent<Rigidbody>().useGravity = false;
+
+            heldObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
             heldObject.GetComponent<ObjectHoldInteractable>().ChangeParent(objectHolder.transform);
             heldObject.transform.localPosition = Vector3.zero;
             isHolding = true;
@@ -116,6 +118,8 @@ public class CharacterMovement : MonoBehaviour
         {
             placementObject = GetComponent<ObjectDetection>().GetInteractedPlacementObject();
             heldObject.GetComponent<Rigidbody>().useGravity = true;
+            //heldObject.GetComponent<Rigidbody>().constraints = ~RigidbodyConstraints.FreezePositionX | ~RigidbodyConstraints.FreezePositionY | ~RigidbodyConstraints.FreezePositionZ;
+            heldObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
             heldObject.GetComponent<ObjectHoldInteractable>().ChangeParent(placementObject.transform);
             heldObject.transform.localPosition = Vector3.zero;
             heldObject = null;

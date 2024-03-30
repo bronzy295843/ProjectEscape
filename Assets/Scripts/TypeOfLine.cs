@@ -19,5 +19,6 @@ public enum Line
     Increment,
     If,
     Empty,
-    Bool
+    Bool,
+    LocalVariable
 };

@@ -35,7 +35,7 @@ public class ObjectDetection : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray_pos.position, ray_pos.TransformDirection(Vector3.forward), out hit, distance))
         {
-            Debug.Log(hit.transform.transform.name);
+            //Debug.Log(hit.transform.transform.name);
             if(hit.transform.gameObject.GetComponent<EnemyController>())
             {
                 enemyDetected = true;
