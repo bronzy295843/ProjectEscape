@@ -89,7 +89,7 @@ public class GameHandler : MonoBehaviour
             HideMouseCursor();
 
             TrapRoomEntranceDoor.SetActive(true);
-           // TrapRoomInvisibleWall.SetActive(false);
+            TrapRoomInvisibleWall.SetActive(false);
 
             TrapCellFakePuzzleCompleted = false;
         }
@@ -101,7 +101,7 @@ public class GameHandler : MonoBehaviour
             BrainChipPuzzleCompleted = false;
 
             BrainChipRemovedDisplay.SetActive(true);
-            TrapRoomEntranceDoor.SetActive(true);
+            TrapRoomEntranceDoor.SetActive(false);
 
             character.canInteract = false;
             HideMouseCursor();
