@@ -13,6 +13,12 @@ public class PuzzlePanel : MonoBehaviour
     [SerializeField] private TypeOfLine[] codeLine;
     [SerializeField] private TypeOfLine[] toolBox;
 
+    //private TypeOfLine[] tempCodeLine;
+    //private TypeOfLine[] tempToolBox;
+
+    private Line[] tempCodeLineTypes;
+    private Line[] tempToolBoxTypes;
+
     [SerializeField] private float yDeviation_codeBox = 80f;
     [SerializeField] private float xDeviation_codeBox = -300f;
 
@@ -65,7 +71,7 @@ public class PuzzlePanel : MonoBehaviour
 
     void Update()
     {
-        if (puzzleNumber == 1 || puzzleNumber == 3)
+        if (puzzleNumber == 1 || puzzleNumber == 3 || puzzleNumber == 7)
             RunCodeBlock();
 
         else if (puzzleNumber == 2)
@@ -99,6 +105,7 @@ public class PuzzlePanel : MonoBehaviour
             yDeviation -= 100;
             codeLine[i].linePrefab = instantiatedLine;
         }
+        SaveInitialState();
     }
 
     public void UpdateCodeLines()
@@ -160,6 +167,7 @@ public class PuzzlePanel : MonoBehaviour
     private void RunDisableEnemyPuzzleCodeBlock()
     {
 
+        GameHandler.Instance.EnemyDisablePuzzleOngoing = true;
         codeLine[codeLineIndex].linePrefab.GetComponentInChildren<SelectedCodeLine>().EnableHighlight();
 
 
@@ -195,7 +203,10 @@ public class PuzzlePanel : MonoBehaviour
             else if (codeLineIndex >= codeLine.Length || codeLine[codeLineIndex].lineType == Line.EndCodeLine)
             {
                 if (freeze_count >= maxFreezeCount)
+                {
                     GameHandler.Instance.EnemyDisablePuzzleCompleted = true;
+                    Reset();
+                }
 
             }
             else
@@ -228,6 +239,8 @@ public class PuzzlePanel : MonoBehaviour
                     GameHandler.Instance.PuzzleCompleted = true;
                 else if (puzzleNumber == 3)
                     GameHandler.Instance.PlatformPuzzleCompleted = true;
+                else if (puzzleNumber == 7)
+                    GameHandler.Instance.TrapCellTruePuzzleCompleted = true;
             }
             else
                 codeLineIndex++;
@@ -283,6 +296,65 @@ public class PuzzlePanel : MonoBehaviour
             codeLine[codeLineIndex].linePrefab.GetComponentInChildren<SelectedCodeLine>().EnableHighlight();
             lastTime = Time.time;
         }
+    }
+
+    private void SaveInitialState()
+    {
+        //tempCodeLine = new TypeOfLine[codeLine.Length];
+        //tempCodeLine = codeLine;
+        tempCodeLineTypes = new Line[codeLine.Length];
+        //for(int i = 0; i< codeLine.Length;i++)
+        //{
+        //    tempCodeLine[i].text = codeLine[i].text;
+        //    tempCodeLine[i].lineType = codeLine[i].lineType;
+
+        //    //codeLine[i].linePrefab.GetComponent<CodeLineInformation>().SetCodeLineText(codeLine[i].text);
+        //    //codeLine[i].linePrefab.GetComponent<CodeLineInformation>().SetCodeLineType(codeLine[i].lineType);
+        //}
+
+        for(int i = 0; i<codeLine.Length; i++) 
+        {
+            tempCodeLineTypes[i] = codeLine[i].lineType;
+        }
+
+        //tempToolBox = new TypeOfLine[toolBox.Length];
+        //tempToolBox = toolBox;
+
+        tempToolBoxTypes = new Line[toolBox.Length];
+
+        for (int i = 0; i < toolBox.Length; i++)
+        {
+            tempToolBoxTypes[i] = toolBox[i].lineType;    
+        }
+
+        //for (int i = 0; i < codeLine.Length; i++)
+        //{
+        //    tempToolBox[i].text = toolBox[i].text;
+        //    tempToolBox[i].lineType = toolBox[i].lineType;
+        //}
+
+    }
+    public void Reset()
+    {
+        for (int i = 0; i < codeLine.Length; i++)
+        {
+            codeLine[i].linePrefab.GetComponentInChildren<TextMeshProUGUI>().text = codeLine[i].text;
+            codeLine[i].lineType = tempCodeLineTypes[i];
+            codeLine[i].linePrefab.GetComponent<CodeLineInformation>().SetCodeLineText(codeLine[i].text);
+            codeLine[i].linePrefab.GetComponent<CodeLineInformation>().SetCodeLineType(tempCodeLineTypes[i]);
+        }
+
+
+        for (int i = 0; i < toolBox.Length; i++)
+        {
+            toolBox[i].linePrefab.GetComponentInChildren<TextMeshProUGUI>().text = toolBox[i].text;
+            toolBox[i].lineType = tempToolBoxTypes[i];
+            toolBox[i].linePrefab.GetComponent<CodeLineInformation>().SetCodeLineText(toolBox[i].text);
+            toolBox[i].linePrefab.GetComponent<CodeLineInformation>().SetCodeLineType(tempToolBoxTypes[i]);
+        }
+
+        freeze_count = 0;
+        codeLineIndex = 1;
     }
 
     public void PromptChange()

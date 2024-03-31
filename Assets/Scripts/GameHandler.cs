@@ -22,13 +22,18 @@ public class GameHandler : MonoBehaviour
     [SerializeField] private GameObject TrapRoomExitDoor; 
     [SerializeField] private GameObject BrainChipRemovedDisplay;
 
+    [SerializeField] private GameObject TrapRoomExitDoorTrigger;
+
     public bool PuzzleCompleted = false;
     public bool SidePuzzleStorageRoomCompleted = false;
     public bool StairsPuzzleCompleted = false;
     public bool PlatformPuzzleCompleted = false;
     public bool EnemyDisablePuzzleCompleted = false;
+    public bool EnemyDisablePuzzleOngoing = false;
     public bool TrapCellFakePuzzleCompleted = false;
     public bool BrainChipPuzzleCompleted = false;
+    public bool TrapCellTruePuzzleCompleted = false;
+
 
     [SerializeField]
     CharacterMovement character;
@@ -80,6 +85,11 @@ public class GameHandler : MonoBehaviour
             character.EnemyInteractingWith.GetComponent<EnemyController>().FreezeEnemy();
             character.HideEnemyInteractPopUp();
             EnemyDisablePuzzleCompleted = false;
+            EnemyDisablePuzzleOngoing = false;
+
+            character.canInteract = false;
+            HideMouseCursor();
+
         }
         if(TrapCellFakePuzzleCompleted)
         {
@@ -102,6 +112,19 @@ public class GameHandler : MonoBehaviour
 
             BrainChipRemovedDisplay.SetActive(true);
             TrapRoomEntranceDoor.SetActive(false);
+            TrapRoomExitDoorTrigger.SetActive(true);
+
+            character.canInteract = false;
+            HideMouseCursor();
+        }
+        if (TrapCellTruePuzzleCompleted)
+        {
+            PuzzlePanel.Instance.DestroyPuzzle();
+
+            character.canMove = true;
+            TrapCellTruePuzzleCompleted = false;
+
+            TrapRoomExitDoor.GetComponent<Door>().OpenDoor();
 
             character.canInteract = false;
             HideMouseCursor();

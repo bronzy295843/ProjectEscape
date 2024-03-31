@@ -5,14 +5,13 @@ using UnityEngine;
 public class Door : MonoBehaviour
 {
     private Vector3 startPos;
-    private Vector3 endPos;
+    [SerializeField] private Vector3 endPos;
 
     float speed = 0.25f;
 
     void Start()
     {
         startPos = transform.localPosition;
-        endPos = new Vector3(0f, 1.2f, 0f);
     }
 
     public void OpenDoor()

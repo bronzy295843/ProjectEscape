@@ -141,6 +141,7 @@ public class CharacterMovement : MonoBehaviour
             EnemyInteractingWith = GetComponent<ObjectDetection>().GetInteractedEnemy();
             EnemyInteractingWith.GetComponent<EnemyController>().ShowFreezePuzzlePanel();
             EnemyInteractingWith.GetComponent<EnemyController>().canMove = false;
+            EnemyInteractingWith.GetComponent<EnemyController>().isFrozen = true;
         }
     }
 

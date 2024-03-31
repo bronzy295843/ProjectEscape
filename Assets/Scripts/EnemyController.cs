@@ -16,6 +16,7 @@ public class EnemyController : MonoBehaviour
     public bool canMove = true;
     private bool isColliding;
     private bool isRight;
+    public bool isFrozen;
 
     Vector3 moveDirection = Vector3.zero;
 
@@ -36,7 +37,6 @@ public class EnemyController : MonoBehaviour
                 return;
             isColliding = true;
 
-            canMove = false;
 
             StartCoroutine(StayIdleAndRotate());
         }
@@ -45,6 +45,21 @@ public class EnemyController : MonoBehaviour
             collision.gameObject.GetComponent<CharacterMovement>().Respawn(spawnPoint.position);
         }
     }
+
+    //private void OnTriggerStay(Collider collision)
+    //{
+    //    if (!collision.gameObject.GetComponent<CharacterMovement>())
+    //    {
+            
+
+
+    //        StartCoroutine(StayIdleAndRotate());
+    //    }
+    //    else
+    //    {
+    //        collision.gameObject.GetComponent<CharacterMovement>().Respawn(spawnPoint.position);
+    //    }
+    //}
 
     private void Awake()
     {
@@ -57,6 +72,11 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
+        if (!GameHandler.Instance.EnemyDisablePuzzleOngoing && !isColliding && !isFrozen)
+        {
+            canMove = true;
+        }
+
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         float moveSpeed = canMove? speed : 0f;
         
@@ -69,15 +89,22 @@ public class EnemyController : MonoBehaviour
 
     IEnumerator StayIdleAndRotate()
     {
-        yield return new WaitForSeconds(idleTime);
-
-        isColliding = false;
+        canMove = false;
         isRight = !isRight;
-        canMove = true;
 
-        float dir = isRight? -180f : 180f;
+
+        float dir = isRight ? -180f : 180f;
 
         transform.Rotate(0f, dir, 0f);
+
+        yield return new WaitForSeconds(idleTime);
+        isColliding = false;
+
+
+        if (!GameHandler.Instance.EnemyDisablePuzzleOngoing)
+        {
+            canMove = true;
+        }
     }
 
     public void ShowInteractionText()
@@ -103,13 +130,14 @@ public class EnemyController : MonoBehaviour
 
     IEnumerator Timer()
     {
+        isFrozen = true;
         while(freezeTime >= 0)
         {
             freezeTime -= Time.deltaTime;
             yield return new WaitForSeconds(0.001f);
             freezeBar.value = freezeTime;
         }
-        canMove = true;
+        isFrozen = false;
         freezeBar.gameObject.SetActive(false);
     }
 }
