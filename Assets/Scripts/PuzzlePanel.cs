@@ -83,6 +83,8 @@ public class PuzzlePanel : MonoBehaviour
             RunDisableEnemyPuzzleCodeBlock();
         else if (puzzleNumber == 6)
             BrainChipPuzzle();
+        else if (puzzleNumber == 8)
+            HiddenCodePuzzle();
         else if (puzzleNumber == 10)
             FinalExitPuzzle();
     }
@@ -303,6 +305,13 @@ public class PuzzlePanel : MonoBehaviour
         }
     }
 
+    private void HiddenCodePuzzle()
+    {
+        if (promptString == "40395")
+        {
+            GameHandler.Instance.HiddenDoorPuzzleCompleted = true;
+        }
+    }
     private void FinalExitPuzzle()
     {
 

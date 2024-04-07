@@ -108,7 +108,8 @@ public class CharacterMovement : MonoBehaviour
             heldObject = GetComponent<ObjectDetection>().GetInteractedObject();
             heldObject.GetComponent<Rigidbody>().useGravity = false;
 
-            heldObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
+            heldObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ
+                                                              |RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
             heldObject.GetComponent<ObjectHoldInteractable>().ChangeParent(objectHolder.transform);
             heldObject.transform.localPosition = Vector3.zero;
             isHolding = true;
@@ -129,6 +130,7 @@ public class CharacterMovement : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.F) && isHolding)
         {
             heldObject.GetComponent<Rigidbody>().useGravity = true;
+            heldObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
             heldObject.GetComponent<ObjectHoldInteractable>().ChangeParent(null);
             heldObject = null;
             isHolding = false;
