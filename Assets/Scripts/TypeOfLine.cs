@@ -20,5 +20,9 @@ public enum Line
     If,
     Empty,
     Bool,
-    LocalVariable
+    LocalVariable,
+    Ade,
+    Gua,
+    Thy,
+    Cyto
 };

@@ -19,7 +19,8 @@ public class GameHandler : MonoBehaviour
     [SerializeField] private GameObject InvisibleWall;
     [SerializeField] private GameObject TrapRoomInvisibleWall;
     [SerializeField] private GameObject TrapRoomEntranceDoor;
-    [SerializeField] private GameObject TrapRoomExitDoor; 
+    [SerializeField] private GameObject TrapRoomExitDoor;
+    [SerializeField] private GameObject FinalExitDoor;
     [SerializeField] private GameObject BrainChipRemovedDisplay;
 
     [SerializeField] private GameObject TrapRoomExitDoorTrigger;
@@ -33,6 +34,7 @@ public class GameHandler : MonoBehaviour
     public bool TrapCellFakePuzzleCompleted = false;
     public bool BrainChipPuzzleCompleted = false;
     public bool TrapCellTruePuzzleCompleted = false;
+    public bool FinalExitDoorPuzzleCompleted = false;
 
 
     [SerializeField]
@@ -125,6 +127,18 @@ public class GameHandler : MonoBehaviour
             TrapCellTruePuzzleCompleted = false;
 
             TrapRoomExitDoor.GetComponent<Door>().OpenDoor();
+
+            character.canInteract = false;
+            HideMouseCursor();
+        }
+        if (FinalExitDoorPuzzleCompleted)
+        {
+            PuzzlePanel.Instance.DestroyPuzzle();
+
+            character.canMove = true;
+            FinalExitDoorPuzzleCompleted = false;
+
+            FinalExitDoor.GetComponent<Door>().OpenDoorAnimation();
 
             character.canInteract = false;
             HideMouseCursor();

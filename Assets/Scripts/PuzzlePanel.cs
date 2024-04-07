@@ -24,6 +24,7 @@ public class PuzzlePanel : MonoBehaviour
 
     [SerializeField] private float yDeviation_toolBox = 80f;
     [SerializeField] private float xDeviation_toolBox = 400f;
+    [SerializeField] private float spaceBetweenLines = 100f;
 
     [SerializeField] private float delay = 1f;
     private float lastTime = 0f;
@@ -49,6 +50,8 @@ public class PuzzlePanel : MonoBehaviour
     //private bool isEnemyHacked = false;
     private int freeze_count;
     [SerializeField] private int maxFreezeCount;
+
+    private int DNACount = 0;
 
     void Start()
     {
@@ -80,6 +83,8 @@ public class PuzzlePanel : MonoBehaviour
             RunDisableEnemyPuzzleCodeBlock();
         else if (puzzleNumber == 6)
             BrainChipPuzzle();
+        else if (puzzleNumber == 10)
+            FinalExitPuzzle();
     }
 
     
@@ -102,7 +107,7 @@ public class PuzzlePanel : MonoBehaviour
 
             instantiatedLine.GetComponent<RectTransform>().anchoredPosition += Vector2.up * yDeviation;
             instantiatedLine.GetComponent<RectTransform>().anchoredPosition += Vector2.right * xDeviation;
-            yDeviation -= 100;
+            yDeviation -= spaceBetweenLines;
             codeLine[i].linePrefab = instantiatedLine;
         }
         SaveInitialState();
@@ -290,6 +295,77 @@ public class PuzzlePanel : MonoBehaviour
             else if (codeLineIndex >= codeLine.Length || codeLine[codeLineIndex].lineType == Line.EndCodeLine)
             {
                 GameHandler.Instance.BrainChipPuzzleCompleted = true;
+            }
+            else
+                codeLineIndex++;
+            codeLine[codeLineIndex].linePrefab.GetComponentInChildren<SelectedCodeLine>().EnableHighlight();
+            lastTime = Time.time;
+        }
+    }
+
+    private void FinalExitPuzzle()
+    {
+
+        codeLine[codeLineIndex].linePrefab.GetComponentInChildren<SelectedCodeLine>().EnableHighlight();
+
+
+        if (Time.time - lastTime > delay)
+        {
+            codeLine[codeLineIndex].linePrefab.GetComponentInChildren<SelectedCodeLine>().DisableHighlight();
+
+            
+            if (codeLineIndex >= codeLine.Length || codeLine[codeLineIndex].lineType == Line.Loop)
+                codeLineIndex = 1;
+            else if (codeLineIndex >= codeLine.Length || codeLine[codeLineIndex].lineType == Line.Empty)
+            {
+
+            }
+            else if (codeLineIndex >= codeLine.Length || codeLine[codeLineIndex].lineType == Line.Cyto)
+            {
+                DNACount++;
+                codeLineIndex++;
+            }
+            else if (codeLineIndex >= codeLine.Length || codeLine[codeLineIndex].lineType == Line.Thy)
+            {
+                if (DNACount == 1)
+                    DNACount++;
+                else
+                    DNACount = 0;
+                codeLineIndex++;
+            }
+            else if (codeLineIndex >= codeLine.Length || codeLine[codeLineIndex].lineType == Line.Ade)
+            {
+                if (DNACount == 2)
+                    DNACount++;
+                else
+                    DNACount = 0;
+                codeLineIndex++;
+            }
+            else if (codeLineIndex >= codeLine.Length || codeLine[codeLineIndex].lineType == Line.Gua)
+            {
+                if (DNACount == 3)
+                    DNACount++;
+                else
+                    DNACount = 0;
+                codeLineIndex++;
+            }
+            else if (codeLineIndex >= codeLine.Length || codeLine[codeLineIndex].lineType == Line.LocalVariable)
+            {
+                codeLine[codeLineIndex].linePrefab.GetComponentInChildren<TextMeshProUGUI>().text = promptString;
+                codeLine[codeLineIndex].linePrefab.GetComponent<CodeLineInformation>().SetCodeLineText(promptString);
+                codeLineIndex++;
+
+            }
+            else if (codeLineIndex >= codeLine.Length || codeLine[codeLineIndex].lineType == Line.If)
+            {
+                if (DNACount >= 4)
+                    codeLineIndex++;
+                else
+                    codeLineIndex += 2;
+            }
+            else if (codeLineIndex >= codeLine.Length || codeLine[codeLineIndex].lineType == Line.EndCodeLine)
+            {
+                GameHandler.Instance.FinalExitDoorPuzzleCompleted = true;
             }
             else
                 codeLineIndex++;

@@ -19,6 +19,11 @@ public class Door : MonoBehaviour
         StartCoroutine(SlidingOpen());
     }
 
+    public void OpenDoorAnimation()
+    {
+        GetComponent<Animator>().SetTrigger("openDoor");
+    }
+
     private IEnumerator SlidingOpen()
     {
         float time = 0f;
