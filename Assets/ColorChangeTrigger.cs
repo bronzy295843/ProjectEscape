@@ -13,7 +13,7 @@ public class ColorChangeTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player") && !isTriggered) 
         {
-            Debug.Log("Triggered");
+            //Debug.Log("Triggered");
             GetComponent<Renderer>().material.color = Color.green;
             Indicator.GetComponent<Renderer>().material.color = Color.green;
             isTriggered = true;
