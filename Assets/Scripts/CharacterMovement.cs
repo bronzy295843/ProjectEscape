@@ -44,8 +44,13 @@ public class CharacterMovement : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
         playerAnimator = GetComponentInChildren<Animator>();
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
+    }
+
+    private void Awake()
+    {
+        canMove = false;
     }
 
     // Update is called once per frame
@@ -87,11 +92,20 @@ public class CharacterMovement : MonoBehaviour
 
         if (canMove)
         {
+            SavePosition();
+
+            if (Input.GetKey(KeyCode.E))
+            {
+                UIManager.Instance.ShowPauseMenu();
+            }
+
             rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
             rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
         }
+
+       
 
         if (Input.GetKey(KeyCode.F) && canInteract)
         {
@@ -145,6 +159,33 @@ public class CharacterMovement : MonoBehaviour
             EnemyInteractingWith.GetComponent<EnemyController>().canMove = false;
             EnemyInteractingWith.GetComponent<EnemyController>().isFrozen = true;
         }
+
+    }
+
+    private void SavePosition()
+    {
+        if (PlayerPrefs.GetInt("HasSaveState", 0) == 0) 
+        {
+            PlayerPrefs.SetInt("HasSaveState", 1);
+        }
+
+        PlayerPrefs.SetFloat("xPosition", transform.position.x); 
+        PlayerPrefs.SetFloat("yPosition", transform.position.y); 
+        PlayerPrefs.SetFloat("zPosition", transform.position.z); 
+    }
+
+    public void LoadPosition()
+    {
+        characterController.enabled = false;
+        transform.position = new Vector3(PlayerPrefs.GetFloat("xPosition"), PlayerPrefs.GetFloat("yPosition"), PlayerPrefs.GetFloat("zPosition"));
+        characterController.enabled = true;
+    }
+
+    public void LoadStartingPosition()
+    {
+        characterController.enabled = false;
+        transform.position = new Vector3(-7.4f, 0.6f, 3.98f);
+        characterController.enabled = true;
     }
 
     public void Respawn(Vector3 pos)

@@ -48,6 +48,18 @@ public class GameHandler : MonoBehaviour
             Instance = this;
     }
 
+    public void LoadPlayerPosition()
+    {
+        character.LoadPosition();
+        character.canMove = true;
+    }
+
+    public void LoadPlayerStartingPosition()
+    {
+        character.LoadStartingPosition();
+        character.canMove = true;
+    }
+
     void Update()
     {
         if (PuzzleCompleted)
@@ -149,13 +161,16 @@ public class GameHandler : MonoBehaviour
         {
             PuzzlePanel.Instance.DestroyPuzzle();
 
-            character.canMove = true;
+            character.canMove = false;
             FinalExitDoorPuzzleCompleted = false;
 
             FinalExitDoor.GetComponent<Door>().OpenDoorAnimation();
 
             character.canInteract = false;
-            HideMouseCursor();
+
+            PlayerPrefs.SetInt("HasSaveState", 0);
+
+            UIManager.Instance.ShowGameOverMenu();
         }
     }
 
@@ -167,9 +182,17 @@ public class GameHandler : MonoBehaviour
         HideMouseCursor();
     }
 
-    private void HideMouseCursor()
+    public void HideMouseCursor()
     {
+        Debug.Log("Hide");
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    public void ShowMouseCursor()
+    {
+        Debug.Log("Show");
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 }
