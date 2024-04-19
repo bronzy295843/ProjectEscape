@@ -2,3 +2,69 @@ AH! you are finally awake subject 307!i see the surgery went well. you're alive 
 lets begin the experiment shall we! oh wait there's a sticky note left here it says "use the W A S D keys to move" and 
 "mouse to orient yourself" strange, i have no idea what that means. Anyways, why dont you approach the door and
  we'll see if the implants are functioning properly.
+---------------------------------------------
+
+
+Scene 1: (waking up)
+Ah Lab ra- i mean Intern! you’re finally awake! Good. Good. it seems the surgery went well. Anyways. now that you’re up. why dont we put that chip i planted in your brain to use!
+Approach the door and you should see a prompt to interact with it.
+
+puzzle 1 tutorial:
+When interacting with my special panels you will enter the puzzle space! An interface that lets you interact with the puzzle will appear and by solving it you will be able to do various things! like for example, opening this door. since this is the first puzzle i’ll help you through it. 
+as you can see here. the door is locked and will never open unless the highlighted space reached the open door function. however that loop back function prevents that from happening.
+simply grab that loop back function and place it into the tool box there. 
+then grab the go ahead block which completes the block and acts as a filler to make the highlighted region connect with the open door function.
+
+after puzzle
+Excellent! you can follow basic instructions! congrats Lab r- Intern, you have passed the bare minimum! truly a marvelous specimen you are! i didnt even have to send the cleaner bots to take care of you! hahah. well anyways lets move on and i’ll help you out of the facility. thats what you want right? to escape? well just follow my instructions and you’ll be home in a jiffy.
+but first, why dont i give you a little tour! dont worry! its on the way to the exit so its fine. you wont even notice me leading you into a traaaansient journey through the facility! haha! just take my word for it. its not like anyone else is around. *i made sure of it* 
+
+this is the lab for trainees. i kept quite a bunch of staff. sad they ran as soon as i cut their pay for the 8th time. no lyalty i tell you. all they want if a piece of my funds. MY FUNDS! The gall of some people. thinking they are owed something.
+
+Anyways, for now why dont you solve this little puzzle here while i get the tra- things ready for you upstairs.
+you just have pick up the apples and put them into the box. quite elementary if you ask me. but it may prove difficult for one such as you, so take your time.
+
+
+
+hmm? you’re done with that last one already?
+well then lets move on shall we. up the stairs to the next- wait where are the stairs... Oh! right i removed them after the last *intern* tried escap-ahem. anyways, lets rectify that. you’ll see another of my panels next to the wall there. it’ll bring the stairs back.
+
+Stairs and adders puzzle:
+In this puzzle simply put you need to make the number of steps equal to the required number for the stairs to form. ~~too little steps and you’ll get a wall, too many and you’ll get a slope~~ when the step count reaches 18 the stairs will form and you’ll be able to proceed.
+
+and voila! stairs! now as you can see i renovated the place. the fancy interior will surely catch your eyes. away from all the cameras im using as surveil- a survey how on how your trip is going so far! 
+
+
+Now im sure you will like the next room i have here. to reach the next area you’re going to have to activate the three pressure plates on the ground. there are three scattered in these maze of boxes. sadly you cant just move the boxes because they’re full of equipment. good luck intern. i’ll be watching.
+
+Ah yes, i see you’ve reached the pit trap i made. ah but dont worry, i forgot about it so there arent any sharks in there…or any water for that matter. still dont do falling in. it’ll be tedious to get you out.
+
+interact with the panel there. you’ll be able to bridge the gap by bringing the floor back up.
+
+
+well. we are at the end. the exit is right there. go on. just interact with the panel there and you’ll be free.
+
+HAH! did you think it would end so easily LAB RAT! i havent had such a fine specimen like yourself in years! do you think i would let you escape!
+
+welcome to your new home! i even put a bed in there for you. res assured your stay will be indefinite.
+
+Dont you dare think about escaping!
+
+Dont touch that!
+
+nononononono!
+
+
+Thats it! activate the all security systems online! activate the robots! the lasers! THE TELEPORTER tiles! everything!
+
+dont you dare think of getting away from me! when they see that i got the neural link to work they’ll come crawling back! i’ll have the funding to do anything i want!
+
+You think you can take all that away from me! just go back to your cell and be a good lab rat!
+
+crap! where did i drop my flashlight! it has to be around here somewhere! if the lab rat finds the code in the console room... 
+
+he got through! but how? 
+
+still, theres no way he’ll be able to get through the teleporter room. the floor layout is set to a completely random question.
+
+the lasers! the lasers will surely…
