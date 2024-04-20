@@ -48,6 +48,10 @@ public class GameHandler : MonoBehaviour
             Instance = this;
     }
 
+    private void Start()
+    {
+    }
+
     public void LoadPlayerPosition()
     {
         character.LoadPosition();
@@ -58,6 +62,7 @@ public class GameHandler : MonoBehaviour
     {
         character.LoadStartingPosition();
         character.canMove = true;
+        SoundManager.Instance.PlayMusic("Room1_Awake");
     }
 
     void Update()
@@ -71,9 +76,10 @@ public class GameHandler : MonoBehaviour
 
             character.canInteract = false;
             HideMouseCursor();
+            SoundManager.Instance.PlayMusic("AfterFirstPuzzle");
         }
 
-        if(StairsPuzzleCompleted)
+        if (StairsPuzzleCompleted)
         {
             PuzzlePanel.Instance.DestroyPuzzle();
             stairsToFirstFloor.SetActive(true);

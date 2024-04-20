@@ -62,7 +62,20 @@ public class PuzzlePanel : MonoBehaviour
         SetText(toolBox);
 
         if (puzzleNumber == 5)
+        {
             TrapPuzzleFake();
+            SoundManager.Instance.PlayMusic("FakeExitDoor");
+        }
+
+        if(puzzleNumber == 1)
+            SoundManager.Instance.PlayMusic("FirstPuzzle");
+
+        if (puzzleNumber == 2)
+            SoundManager.Instance.PlayMusic("StairsPuzzle");
+
+        if (puzzleNumber == 8)
+            SoundManager.Instance.PlayMusic("HiddenCodePuzzle");
+
     }
 
     void Awake()
@@ -258,7 +271,6 @@ public class PuzzlePanel : MonoBehaviour
 
     private void TrapPuzzleFake()
     {
-        SoundManager.Instance.PlayMusic("YouAreTrapped!");
         Destroy(PuzzleTrigger);
         Destroy(this.gameObject, 1f);
         GameHandler.Instance.TrapCellFakePuzzleCompleted = true;
