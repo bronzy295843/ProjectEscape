@@ -162,6 +162,8 @@ public class GameHandler : MonoBehaviour
 
             character.canInteract = false;
             HideMouseCursor();
+
+            SoundManager.Instance.PlayMusic("AfterCodeDoor");
         }
         if (FinalExitDoorPuzzleCompleted)
         {
