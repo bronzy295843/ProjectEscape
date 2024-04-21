@@ -200,7 +200,7 @@ public class GameHandler : MonoBehaviour
             character.canInteract = false;
 
             PlayerPrefs.SetInt("HasSaveState", 0);
-
+          //  SoundManager.Instance.ToggleMusic();
             UIManager.Instance.ShowGameOverMenu();
         }
     }

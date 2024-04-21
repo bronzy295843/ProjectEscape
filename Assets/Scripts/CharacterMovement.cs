@@ -68,8 +68,8 @@ public class CharacterMovement : MonoBehaviour
         float movementDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
-        print(curSpeedX + " " + curSpeedY);
-        print("move direction: " + moveDirection.magnitude);
+       // print(curSpeedX + " " + curSpeedY);
+       // print("move direction: " + moveDirection.magnitude);
 
         //handles jumping when implemented later
         //if (Input.GetButton("Jump") && canMove && characterController.isGrounded)

@@ -73,6 +73,8 @@ public class PuzzlePanel : MonoBehaviour
 
         if (puzzleNumber == 2)
             SoundManager.Instance.PlayMusic("StairsPuzzle");
+        if (puzzleNumber == 10)
+            SoundManager.Instance.PlayMusic("FinalPuzzleHint");
     }
 
     void Awake()
