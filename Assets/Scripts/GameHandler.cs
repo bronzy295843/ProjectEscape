@@ -11,6 +11,8 @@ public class GameHandler : MonoBehaviour
     // Starting Room
     public GameObject door;
 
+    public GameObject playerCrossHair;
+
     // Stairs
     [SerializeField] private GameObject stairsToFirstFloor;
 
@@ -46,6 +48,9 @@ public class GameHandler : MonoBehaviour
     {
         if (Instance == null)
             Instance = this;
+
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 60;
     }
 
     private void Start()
@@ -69,6 +74,8 @@ public class GameHandler : MonoBehaviour
     {
         if (PuzzleCompleted)
         {
+            playerCrossHair.SetActive(true);
+
             PuzzlePanel.Instance.DestroyPuzzle();
             door.GetComponent<Door>().OpenDoor();
             character.canMove = true;
@@ -81,6 +88,8 @@ public class GameHandler : MonoBehaviour
 
         if (StairsPuzzleCompleted)
         {
+            playerCrossHair.SetActive(true);
+
             PuzzlePanel.Instance.DestroyPuzzle();
             stairsToFirstFloor.SetActive(true);
             character.canMove = true;
@@ -92,6 +101,8 @@ public class GameHandler : MonoBehaviour
 
         if (PlatformPuzzleCompleted)
         {
+            playerCrossHair.SetActive(true);
+
             PuzzlePanel.Instance.DestroyPuzzle();
             Platform.SetActive(true);
             InvisibleWall.SetActive(false);
@@ -103,6 +114,8 @@ public class GameHandler : MonoBehaviour
         }
         if(EnemyDisablePuzzleCompleted)
         {
+            playerCrossHair.SetActive(true);
+
             PuzzlePanel.Instance.HidePuzzle();
             character.EnemyInteractingWith.GetComponent<EnemyController>().FreezeEnemy();
             character.HideEnemyInteractPopUp();
@@ -115,6 +128,8 @@ public class GameHandler : MonoBehaviour
         }
         if(TrapCellFakePuzzleCompleted)
         {
+            playerCrossHair.SetActive(true);
+
             character.canMove = true;
             character.canInteract = false;
 
@@ -127,6 +142,8 @@ public class GameHandler : MonoBehaviour
         }
         if (BrainChipPuzzleCompleted)
         {
+            playerCrossHair.SetActive(true);
+
             PuzzlePanel.Instance.DestroyPuzzle();
 
             character.canMove = true;
@@ -141,6 +158,8 @@ public class GameHandler : MonoBehaviour
         }
         if (TrapCellTruePuzzleCompleted)
         {
+            playerCrossHair.SetActive(true);
+
             PuzzlePanel.Instance.DestroyPuzzle();
 
             character.canMove = true;
@@ -153,6 +172,8 @@ public class GameHandler : MonoBehaviour
         }
         if(HiddenDoorPuzzleCompleted)
         {
+            playerCrossHair.SetActive(true);
+
             PuzzlePanel.Instance.DestroyPuzzle();
 
             character.canMove = true;
@@ -167,6 +188,8 @@ public class GameHandler : MonoBehaviour
         }
         if (FinalExitDoorPuzzleCompleted)
         {
+            playerCrossHair.SetActive(true);
+
             PuzzlePanel.Instance.DestroyPuzzle();
 
             character.canMove = false;
@@ -184,6 +207,8 @@ public class GameHandler : MonoBehaviour
 
     public void PuzzleExit()
     {
+        playerCrossHair.SetActive(true);
+
         PuzzlePanel.Instance.gameObject.SetActive(false);
         character.canMove = true;
 

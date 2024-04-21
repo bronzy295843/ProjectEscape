@@ -9,12 +9,14 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject startMenu;
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject gameOverMenu;
+    [SerializeField] private GameObject howToPlayScreen;
+    [SerializeField] private GameObject settingsScreen;
+    [SerializeField] private GameObject creditsScreen;
 
     [SerializeField] private GameObject MainMenuContinueButton;
     public static UIManager Instance { get; private set; }
 
-    private bool startButtonClicked;
-    private bool continueButtonClicked;
+    private bool isFromPauseMenu;
 
     private void Awake()
     {
@@ -28,42 +30,10 @@ public class UIManager : MonoBehaviour
         {
             MainMenuContinueButton.GetComponent<Image>().color = new Color(1f, 1f, 1f);
         }
-        //SceneManager.LoadScene(1);
-
-        //DontDestroyOnLoad(this.gameObject);
-
     }
-
-    //private void OnEnable()
-    //{
-    //    SceneManager.sceneLoaded += OnSceneLoaded;
-    //}
-
-    //private void OnDisable()
-    //{
-    //    SceneManager.sceneLoaded -= OnSceneLoaded;
-    //}
-
-    //private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    //{
-    //    if(SceneManager.GetActiveScene().buildIndex == 1)
-    //    {
-    //        if(startButtonClicked)
-    //        {
-    //            GameHandler.Instance.LoadPlayerStartingPosition();
-    //        }
-    //        else if(continueButtonClicked)
-    //        {
-    //            GameHandler.Instance.LoadPlayerPosition();
-    //        }
-    //        GameHandler.Instance.HideMouseCursor();
-    //    }
-    //    print("scene changed");
-    //}
 
     private void Update()
     {
-        //print("playing");
     }
 
     public void ExitButtonClicked()
@@ -73,20 +43,22 @@ public class UIManager : MonoBehaviour
 
     public void StartButtonClicked()
     {
+        GameHandler.Instance.playerCrossHair.SetActive(true);
+
         Time.timeScale = 1;
         startMenu.SetActive(false);
         gameOverMenu.SetActive(false);
         GameHandler.Instance.LoadPlayerStartingPosition();
         GameHandler.Instance.HideMouseCursor();
         print("scene change");
-        //SceneManager.LoadScene(1);
-        //startButtonClicked = true;
     }
 
     public void ContinueButtonClicked()
     {
         if (PlayerPrefs.GetInt("HasSaveState", 0) != 0) 
         {
+            GameHandler.Instance.playerCrossHair.SetActive(true);
+
             Time.timeScale = 1;
             GameHandler.Instance.LoadPlayerPosition();
             startMenu.SetActive(false);
@@ -96,6 +68,10 @@ public class UIManager : MonoBehaviour
 
     public void ShowPauseMenu()
     {
+        isFromPauseMenu = true;
+
+        GameHandler.Instance.playerCrossHair.SetActive(false);
+
         GameHandler.Instance.ShowMouseCursor();
         Time.timeScale = 0;
         pauseMenu.SetActive(true);
@@ -103,6 +79,10 @@ public class UIManager : MonoBehaviour
 
     public void HidePauseMenu()
     {
+        isFromPauseMenu = false;
+
+        GameHandler.Instance.playerCrossHair.SetActive(true);
+
         Time.timeScale = 1;
         GameHandler.Instance.HideMouseCursor();
         pauseMenu.SetActive(false);
@@ -112,16 +92,57 @@ public class UIManager : MonoBehaviour
     {
         GameHandler.Instance.ShowMouseCursor();
         Time.timeScale = 0;
-        //pauseMenu.SetActive(false);
-        //startMenu.SetActive(true);
         SceneManager.LoadScene(1);
     }
 
     public void ShowGameOverMenu()
     {
+        GameHandler.Instance.playerCrossHair.SetActive(false);
+
         GameHandler.Instance.ShowMouseCursor();
         Time.timeScale = 0;
         pauseMenu.SetActive(false);
+        gameOverMenu.SetActive(true);
+    }
+
+    public void ShowHowToPlayScreen()
+    {
+        startMenu.SetActive(false);
+        howToPlayScreen.SetActive(true);
+    }
+
+    public void HideHowToPlayScreen()
+    {
+        howToPlayScreen.SetActive(false);
+        startMenu.SetActive(true);
+    }
+
+    public void ShowSettingsScreen()
+    {
+        startMenu.SetActive(false);
+        settingsScreen.SetActive(true);
+    }
+
+    public void HideSettingsScreen()
+    {
+        settingsScreen.SetActive(false);
+        if(!isFromPauseMenu)
+            startMenu.SetActive(true);
+    }
+
+    public void HideSettingsScreenFromPauseMenu()
+    {
+        settingsScreen.SetActive(false);
+    }
+
+    public void ShowCreditsScreen()
+    {
+        creditsScreen.SetActive(true);
+        gameOverMenu.SetActive(false);
+    }
+    public void HideCreditsScreen()
+    {
+        creditsScreen.SetActive(false);
         gameOverMenu.SetActive(true);
     }
 }

@@ -10,7 +10,7 @@ public class LaserBeam : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<CharacterMovement>())
         {
-
+            SoundManager.Instance.PlaySFX("Laser Hit");
             collision.gameObject.GetComponent<CharacterMovement>().Respawn(spawnPoint.position);
         }
     }

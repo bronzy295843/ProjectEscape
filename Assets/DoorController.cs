@@ -7,7 +7,7 @@ public class DoorController : MonoBehaviour
     public GameObject door; 
     public int requiredTriggers = 3; 
 
-    private int currentTriggers = 0; // Current count
+    private int currentTriggers = 0; 
 
     private Vector3 startPos;
     private Vector3 endPos;
@@ -19,8 +19,6 @@ public class DoorController : MonoBehaviour
         startPos = transform.localPosition;
         endPos = new Vector3(0f, 1.2f, 0f);
     }
-
-
 
     private void OnEnable()
     {
@@ -43,8 +41,7 @@ public class DoorController : MonoBehaviour
 
     private void OpenDoor()
     {
-        // Here you can disable the door, play an animation, or whatever signifies the door opening
-        door.SetActive(false); // Simple example: just hide the door
+        door.SetActive(false);
         StartCoroutine(SlidingOpen());
     }
 

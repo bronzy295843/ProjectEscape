@@ -10,8 +10,9 @@ public class LaserBeamDisable : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<CharacterMovement>())
         {
-
+            SoundManager.Instance.PlaySFX("Laser Deactivate");
             LaserBeams.SetActive(false);
+            gameObject.SetActive(false);
         }
     }
 }

@@ -68,6 +68,9 @@ public class CharacterMovement : MonoBehaviour
         float movementDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
+        print(curSpeedX + " " + curSpeedY);
+        print("move direction: " + moveDirection.magnitude);
+
         //handles jumping when implemented later
         //if (Input.GetButton("Jump") && canMove && characterController.isGrounded)
         //{
@@ -88,7 +91,8 @@ public class CharacterMovement : MonoBehaviour
         }
 
         characterController.Move(moveDirection * Time.deltaTime);
-        playerAnimator.SetFloat(IS_WALK, moveDirection.magnitude);
+        playerAnimator.SetFloat(IS_WALK, curSpeedX);
+
 
         if (canMove)
         {
@@ -242,5 +246,19 @@ public class CharacterMovement : MonoBehaviour
             return true;
         else
             return false;
+    }
+
+    public void PlayFootsteps()
+    {
+        int rand = Random.Range(1, 5);
+
+        if (rand == 1)
+            SoundManager.Instance.PlaySFX("Footstep1");
+        else if (rand == 2)
+            SoundManager.Instance.PlaySFX("Footstep1");
+        else if (rand == 3)
+            SoundManager.Instance.PlaySFX("Footstep3");
+        else
+            SoundManager.Instance.PlaySFX("Footstep4");
     }
 }

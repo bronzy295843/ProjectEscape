@@ -55,6 +55,7 @@ public class PuzzlePanel : MonoBehaviour
 
     void Start()
     {
+        GameHandler.Instance.playerCrossHair.SetActive(false);
         InstantiateCodeLines(codeLine,xDeviation_codeBox, yDeviation_codeBox);
         SetText(codeLine);
 
@@ -72,10 +73,6 @@ public class PuzzlePanel : MonoBehaviour
 
         if (puzzleNumber == 2)
             SoundManager.Instance.PlayMusic("StairsPuzzle");
-
-        if (puzzleNumber == 8)
-            SoundManager.Instance.PlayMusic("HiddenCodePuzzle");
-
     }
 
     void Awake()
@@ -172,10 +169,6 @@ public class PuzzlePanel : MonoBehaviour
                 if (step_count >= maxStepCount)
                     GameHandler.Instance.StairsPuzzleCompleted = true;
             }
-            //else if(codeLineIndex >= codeLine.Length || codeLine[codeLineIndex].lineType == Line.EndCodeLine)
-            //{
-            //    GameHandler.Instance.PuzzleCompleted = true;
-            //}
             else 
                 codeLineIndex++;
             codeLine[codeLineIndex].linePrefab.GetComponentInChildren<SelectedCodeLine>().EnableHighlight();
@@ -397,25 +390,12 @@ public class PuzzlePanel : MonoBehaviour
 
     private void SaveInitialState()
     {
-        //tempCodeLine = new TypeOfLine[codeLine.Length];
-        //tempCodeLine = codeLine;
         tempCodeLineTypes = new Line[codeLine.Length];
-        //for(int i = 0; i< codeLine.Length;i++)
-        //{
-        //    tempCodeLine[i].text = codeLine[i].text;
-        //    tempCodeLine[i].lineType = codeLine[i].lineType;
-
-        //    //codeLine[i].linePrefab.GetComponent<CodeLineInformation>().SetCodeLineText(codeLine[i].text);
-        //    //codeLine[i].linePrefab.GetComponent<CodeLineInformation>().SetCodeLineType(codeLine[i].lineType);
-        //}
 
         for(int i = 0; i<codeLine.Length; i++) 
         {
             tempCodeLineTypes[i] = codeLine[i].lineType;
         }
-
-        //tempToolBox = new TypeOfLine[toolBox.Length];
-        //tempToolBox = toolBox;
 
         tempToolBoxTypes = new Line[toolBox.Length];
 
@@ -423,13 +403,6 @@ public class PuzzlePanel : MonoBehaviour
         {
             tempToolBoxTypes[i] = toolBox[i].lineType;    
         }
-
-        //for (int i = 0; i < codeLine.Length; i++)
-        //{
-        //    tempToolBox[i].text = toolBox[i].text;
-        //    tempToolBox[i].lineType = toolBox[i].lineType;
-        //}
-
     }
     public void Reset()
     {
