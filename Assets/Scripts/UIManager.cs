@@ -20,7 +20,7 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        print("uimanager");
+       // print("uimanager");
         if (Instance == null)
             Instance = this;
         Time.timeScale = 1;
@@ -50,7 +50,7 @@ public class UIManager : MonoBehaviour
         gameOverMenu.SetActive(false);
         GameHandler.Instance.LoadPlayerStartingPosition();
         GameHandler.Instance.HideMouseCursor();
-        print("scene change");
+       // print("scene change");
     }
 
     public void ContinueButtonClicked()
@@ -92,7 +92,7 @@ public class UIManager : MonoBehaviour
     {
         GameHandler.Instance.ShowMouseCursor();
         Time.timeScale = 0;
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(0);
     }
 
     public void ShowGameOverMenu()

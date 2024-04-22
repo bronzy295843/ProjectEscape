@@ -217,14 +217,14 @@ public class GameHandler : MonoBehaviour
 
     public void HideMouseCursor()
     {
-        Debug.Log("Hide");
+       // Debug.Log("Hide Cursor");
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
     public void ShowMouseCursor()
     {
-        Debug.Log("Show");
+       // Debug.Log("Show Cursor");
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }
