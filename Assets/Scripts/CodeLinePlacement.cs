@@ -14,6 +14,7 @@ public class CodeLinePlacement : MonoBehaviour, IDropHandler
             GetComponent<CodeLineInformation>().text = PuzzlePanel.Instance.GetSelcetedCodeLineText();
             GetComponent<CodeLineInformation>().lineType = PuzzlePanel.Instance.GetSelcetedCodeLineType();
             PuzzlePanel.Instance.ChangeSelectedCodeLineInformation();
+            SoundManager.Instance.PlaySFX("PuzzleBlock_Place");
         }
     }
 }

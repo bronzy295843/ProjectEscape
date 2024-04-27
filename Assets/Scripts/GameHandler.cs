@@ -83,6 +83,7 @@ public class GameHandler : MonoBehaviour
 
             character.canInteract = false;
             HideMouseCursor();
+            SoundManager.Instance.PlaySFX("Puzzle_Completion");
             SoundManager.Instance.PlayMusic("AfterFirstPuzzle");
         }
 
@@ -97,6 +98,7 @@ public class GameHandler : MonoBehaviour
 
             character.canInteract = false;
             HideMouseCursor();
+            SoundManager.Instance.PlaySFX("Puzzle_Completion");
         }
 
         if (PlatformPuzzleCompleted)
@@ -111,8 +113,9 @@ public class GameHandler : MonoBehaviour
 
             character.canInteract = false;
             HideMouseCursor();
+            SoundManager.Instance.PlaySFX("Puzzle_Completion");
         }
-        if(EnemyDisablePuzzleCompleted)
+        if (EnemyDisablePuzzleCompleted)
         {
             playerCrossHair.SetActive(true);
 
@@ -124,9 +127,9 @@ public class GameHandler : MonoBehaviour
 
             character.canInteract = false;
             HideMouseCursor();
-
+            SoundManager.Instance.PlaySFX("Puzzle_Completion");
         }
-        if(TrapCellFakePuzzleCompleted)
+        if (TrapCellFakePuzzleCompleted)
         {
             playerCrossHair.SetActive(true);
 
@@ -155,6 +158,7 @@ public class GameHandler : MonoBehaviour
 
             character.canInteract = false;
             HideMouseCursor();
+            SoundManager.Instance.PlaySFX("Puzzle_Completion");
         }
         if (TrapCellTruePuzzleCompleted)
         {
@@ -169,8 +173,9 @@ public class GameHandler : MonoBehaviour
 
             character.canInteract = false;
             HideMouseCursor();
+            SoundManager.Instance.PlaySFX("Puzzle_Completion");
         }
-        if(HiddenDoorPuzzleCompleted)
+        if (HiddenDoorPuzzleCompleted)
         {
             playerCrossHair.SetActive(true);
 
@@ -183,6 +188,7 @@ public class GameHandler : MonoBehaviour
 
             character.canInteract = false;
             HideMouseCursor();
+            SoundManager.Instance.PlaySFX("Puzzle_Completion");
 
             SoundManager.Instance.PlayMusic("AfterCodeDoor");
         }

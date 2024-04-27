@@ -29,6 +29,8 @@ public class EnemyController : MonoBehaviour
 
     [SerializeField] float freezeTime;
 
+    private BoxCollider playerTrigger;
+
     private void OnTriggerEnter(Collider collision)
     {
         if (!collision.gameObject.GetComponent<CharacterMovement>())
@@ -66,6 +68,7 @@ public class EnemyController : MonoBehaviour
         isRight = true;
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
+        playerTrigger = GetComponent<BoxCollider>();
 
         freezeBar.maxValue = freezeTime;
     }
@@ -124,6 +127,7 @@ public class EnemyController : MonoBehaviour
 
     public void FreezeEnemy()
     {
+        playerTrigger.enabled = false;
         freezeBar.gameObject.SetActive(true);
         StartCoroutine(Timer());
     }
@@ -139,5 +143,6 @@ public class EnemyController : MonoBehaviour
         }
         isFrozen = false;
         freezeBar.gameObject.SetActive(false);
+        playerTrigger.enabled = true;
     }
 }
